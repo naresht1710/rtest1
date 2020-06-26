@@ -27,3 +27,8 @@ test("component rendered", async () => {
   // console.log("test n ame", getByTestId("test"));
   expect(getByTestId("test")).toBeInTheDocument();
 });
+
+test("CodeSandbox is rendered or not", () => {
+  let { getByText } = render(<App />);
+  expect(getByText(/CodeSandbox/)).toBeInTheDocument();
+});
