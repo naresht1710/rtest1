@@ -24,6 +24,6 @@ beforeEach(cleanup);
 test("component rendered", async () => {
   let { getByTestId } = render(<App />);
 
-  console.log("test n ame", getByTestId("test"));
+  // console.log("test n ame", getByTestId("test"));
   expect(getByTestId("test")).toBeInTheDocument();
 });
