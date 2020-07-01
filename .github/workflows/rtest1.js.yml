@@ -1,8 +1,8 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions 
 
 name: Node.js CI
-
+ 
 on:
   push:
     branches: [ master ]
@@ -19,18 +19,25 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: workflows/checkout@v2
+    - uses: actions/checkout@master 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: workflows/setup-node@v1
+      uses: actions/setup-node@master
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install --frozen-lockfile
-    - run: yarn build
-    - run: yarn test
-    - uses: workflows/gcloud/auth@master
-      env:
-        GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
- 
-    - uses: workflows/gcloud/cli@master
+#     - run: yarn install --frozen-lockfile
+#     - run: yarn build
+#     - run: yarn test
+      
+    - name: Initialize Google Cloud SDK
+      # This action is located on https://github.com/zxyle/publish-gae-action
+#       uses: actions/checkout@master 
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        args: "app deploy --quiet --project=naresh-sb-246912"
+        version: '290.0.1'
+        project_id: ${{ secrets.PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+
+    - name: Publish app to Google App Engine
+      run: 
+        gcloud -q app deploy app.yaml --promote
