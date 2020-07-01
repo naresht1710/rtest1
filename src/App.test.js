@@ -22,7 +22,7 @@ import "@testing-library/jest-dom/extend-expect";
 beforeEach(cleanup);
 
 test("component rendered", async () => {
-  let { getByTestId } = render(<App />);
+  let { getByTestId, getByText } = render(<App />);
 
   // console.log("test n ame", getByTestId("test"));
   expect(getByTestId("test")).toBeInTheDocument();
