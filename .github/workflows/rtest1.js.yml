@@ -31,7 +31,8 @@ jobs:
     - name: Initialize Google Cloud SDK
       # This action is located on https://github.com/zxyle/publish-gae-action
 #       uses: actions/checkout@master 
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - uses: actions/checkout@v2
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
         project_id: ${{ secrets.PROJECT_ID }}
